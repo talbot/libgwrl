@@ -20,6 +20,7 @@
 #define _MILLISECONDS_WC 1000
 #define _MICROSECONDS_WC 1000000
 #define _NANOSECONDS_WC  1000000000
+#endif
 
 void gwtm_ms_to_timeval(int64_t ms, struct timeval * tv);
 void gwtm_ms_to_timespec(int64_t ms, struct timespec * ts);
@@ -37,6 +38,5 @@ struct timespec * gwtm_timespec_cmp(struct timespec * ts1, struct timespec * ts2
 
 #ifndef HAVE_GETTIMEOFDAY
 int gettimeofday(struct timeval *, struct timezone * tz);
-#endif
 
 #endif

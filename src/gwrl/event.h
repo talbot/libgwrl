@@ -30,8 +30,8 @@
 #include "gwrl/shared_config.h"
 #include "gwrl/shared_include.h"
 #include "gwrl/shared_types.h"
-#include "gwrl/time.h"
-#include "gwrl/string.h"
+#include "gwrl/gwrl_time.h"
+#include "gwrl_string.h"
 #include "gwrl/socket.h"
 #include "gwrl/lock.h"
 

@@ -23,7 +23,7 @@
 #include "shared_config.h"
 #include "shared_include.h"
 #include "shared_types.h"
-#include "gwrl/string.h"
+#include "gwrl_string.h"
 
 #ifndef GW_NET_H
 #define GW_NET_H

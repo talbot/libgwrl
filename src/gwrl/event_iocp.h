@@ -1,4 +1,5 @@
 
+#ifdef HAVE_WINDOWS_H
 #include <MSWSock.h>
 
 typedef struct gwrlbkd_iocp {
@@ -10,6 +11,7 @@ typedef struct gwrlbkd_iocp {
 
 #define _gwrlbkdi(o) ((gwrlbkd_iocp *)o)
 #define _gwprovlp(o) ((gwpr_ovlp *)o)
+#endif
 
 #define PRINT_ERROR_FM(res,compare,chk,err,ret,fre)\
 	if(res compare chk) {\

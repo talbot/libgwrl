@@ -61,7 +61,7 @@
 
 #if defined(INCLUDE_STRING)
 #	if defined(HAVE_STRING_H)
-#		include <string.h>
+#		include <gwrl_string.h>
 #	endif
 #endif
 
@@ -73,7 +73,7 @@
 
 #if defined(INCLUDE_TIME)
 #	if defined(HAVE_TIME_H)
-#		include <time.h>
+#		include <gwrl_time.h>
 #	endif
 #endif
 
