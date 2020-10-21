@@ -69,13 +69,13 @@ if(PLATFORM_DARWIN OR PLATFORM_FREEBSD OR PLATFORM_SUN)
 endif()
 
 if(PLATFORM_LINUX)
-check_c_source_compiles("
+	check_c_source_compiles("
 #include <sys/socket.h>
 int main(int argc, char ** argv){
 	socklen_t sl = 0;
 	return 0;
 }" HAVE_SOCKLEN_T)
-check_c_source_compiles("
+	check_c_source_compiles("
 #include <sys/socket.h>
 sa_family_t t = 0;
 int main(int argc, char ** argv){
@@ -83,7 +83,7 @@ int main(int argc, char ** argv){
 endif()
 
 if(PLATFORM_WINDOWS)
-check_c_source_compiles("
+	check_c_source_compiles("
 #include <Winsock2.h>
 #include <Windows.h>
 int main(int argc, char ** argv){
@@ -101,7 +101,7 @@ if(NOT PLATFORM_WINDOWS)
 endif()
 
 if(PLATFORM_WINDOWS)
-check_c_source_compiles("
+	check_c_source_compiles("
 #include <WinSock2.h>
 #include <Windows.h>
 struct timeval tv = {0};
@@ -110,8 +110,8 @@ int main(int argc, char ** argv){
 	return 0;
 }" HAVE_STRUCT_TIMEVAL)
 
-#re-check struct sockaddr_storage
-check_c_source_compiles("
+	#re-check struct sockaddr_storage
+	check_c_source_compiles("
 #include <Winsock2.h>
 #include <Windows.h>
 int main(int argc, char ** argv){
@@ -253,9 +253,33 @@ if(PLATFORM_LINUX)
 	set(FINAL_LINK_LIBRARIES pthread)
 endif()
 
-add_library(gwrl STATIC ${SOURCES})
+#add_library(gwrl STATIC ${SOURCES})
 add_library(gwrl_dyld SHARED ${SOURCES})
-target_link_libraries(gwrl ${FINAL_LINK_LIBRARIES})
 target_link_libraries(gwrl_dyld ${FINAL_LINK_LIBRARIES})
 set_target_properties(gwrl_dyld PROPERTIES OUTPUT_NAME "gwrl")
 configure_file(shared_config.h.in ${gwrl_SOURCE_DIR}/src/gwrl/shared_config.h)
+add_library(gwrl STATIC
+		event.c
+		event_kqueue.c
+		event_wake_pipe.c
+		gwrl_time.c
+		lock.c
+		proactor.c
+		proactor_imp.c
+		socket.c
+		)
+target_link_libraries(gwrl ${FINAL_LINK_LIBRARIES})
+set_target_properties(gwrl PROPERTIES PUBLIC_HEADER event.h
+		event_iocp.h
+		event_private.h
+		gwrl_string.h
+		gwrl_time.h
+		lock.h
+		proactor.h
+		proactor_imp.h
+		proactor_imp_iocp.h
+		shared_config.h
+		shared_include.h
+		shared_types.h
+		socket.h
+		)
