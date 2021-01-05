@@ -63,9 +63,9 @@ check_type_size(ssize_t HAVE_SSIZE_T)
 
 if(PLATFORM_DARWIN OR PLATFORM_FREEBSD OR PLATFORM_SUN)
 	check_symbol_exists(socklen_t sys/socket.h HAVE_SOCKLEN_T)
-	check_symbol_exists(_SOCKLEN_T sys/socket.h HAVE__SOCKLEN_T)
+	check_symbol_exists(_socklen_t sys/socket.h HAVE__SOCKLEN_T)
 	check_symbol_exists(sa_family_t sys/socket.h HAVE_SA_FAMILY_T)
-	check_symbol_exists(_SA_FAMILY_T sys/socket.h HAVE__SA_FAMILY_T)
+	check_symbol_exists(_sa_family_t sys/socket.h HAVE__SA_FAMILY_T)
 endif()
 
 if(PLATFORM_LINUX)
