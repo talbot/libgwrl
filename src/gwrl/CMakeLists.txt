@@ -82,15 +82,6 @@ int main(int argc, char ** argv){
 }" HAVE_SA_FAMILY_T)
 endif()
 
-if (PLATFORM_FREEBSD)
-	check_c_source_compiles("
-#include <sys/_sockaddr_storage.h>
-int main(int argc, char ** argv){
-	sockaddr_storage ss = {};
-	return 0;
-}" HAVE_SYS__SOCKADDR_STORAGE_H)
-endif()
-
 if(PLATFORM_WINDOWS)
 	check_c_source_compiles("
 #include <Winsock2.h>

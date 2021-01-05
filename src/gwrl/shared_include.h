@@ -125,12 +125,6 @@
 #	endif
 #endif
 
-#if defined(INCLUDE_SYS__SOCKADDR_STORAGE)
-#   if defined(HAVE_SYS__SOCKADDR_STORAGE_H)
-#       include <sys/_sockaddr_storage.h>
-#   endif
-#endif
-
 #if defined(INCLUDE_PTHREAD)
 #	if defined(HAVE_PTHREAD_H)
 #		include <pthread.h>
