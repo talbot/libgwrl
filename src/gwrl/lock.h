@@ -18,6 +18,6 @@
 #endif
 
 void lockid_init(lockid_t * lk);
-bool lockid_lock(lockid_t * lk);
+int lockid_lock(lockid_t * lk);
 void lockid_unlock(lockid_t * lk);
 void lockid_free(lockid_t * lk);

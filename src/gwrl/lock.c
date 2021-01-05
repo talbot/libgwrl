@@ -14,17 +14,17 @@ lockid_init(lockid_t * lk) {
 	#endif
 }
 
-bool
+int
 lockid_lock(lockid_t * lk) {
 	#if defined(PLATFORM_DARWIN)
-        return os_unfair_lock_trylock(lk);
+        return os_unfair_lock_trylock(lk) ? 0 : 1;
 	#elif defined(PLATFORM_WINDOWS)
 		EnterCriticalSection((LPCRITICAL_SECTION)lk);
-		return true;
+		return 0;
 	#elif defined(PLATFORM_LINUX)
-		return pthread_spin_lock(lk) == 0;
+		return pthread_spin_lock(lk);
 	#elif defined(PLATFORM_FREEBSD)
-		return pthread_spin_lock(lk) == 0;
+		return pthread_spin_lock(lk);
 	#endif
 }
 
