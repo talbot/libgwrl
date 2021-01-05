@@ -12,6 +12,7 @@
 #include "gwrl/shared_config.h"
 #include "gwrl/shared_include.h"
 #include "gwrl/shared_types.h"
+#include <string.h>
 
 #ifndef GWTM_H
 #define GWTM_H

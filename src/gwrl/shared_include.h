@@ -214,3 +214,7 @@
 #		include <libkern/OSAtomic.h>
 #	endif
 #endif
+
+#if defined(PLATFORM_DARWIN)
+#   include <os/lock.h>
+#endif
