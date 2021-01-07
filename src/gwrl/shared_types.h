@@ -1,3 +1,4 @@
+#pragma once
 
 #ifdef TYPES_BOOL
 	#if defined(PLATFORM_WINDOWS) && !defined(HAVE_TRUE_FALSE_LC)

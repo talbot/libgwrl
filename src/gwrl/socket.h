@@ -1,3 +1,4 @@
+#pragma once
 
 #define INCLUDE_ASSERT
 #define INCLUDE_ERRNO

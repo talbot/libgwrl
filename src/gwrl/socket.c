@@ -1,4 +1,4 @@
-
+#pragma once
 #include "gwrl/socket.h"
 
 #ifdef __cplusplus
