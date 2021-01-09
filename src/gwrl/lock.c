@@ -11,6 +11,8 @@ lockid_init(lockid_t * lk) {
 		InitializeCriticalSection((LPCRITICAL_SECTION)lk);
 	#elif defined(PLATFORM_LINUX)
 		pthread_spin_init(lk,PTHREAD_PROCESS_PRIVATE);
+	#elif defined(PLATFORM_FREEBSD)
+		pthread_spin_init(lk,PTHREAD_PROCESS_PRIVATE);
 	#endif
 }
 
@@ -46,6 +48,8 @@ lockid_free(lockid_t * lk) {
 	#if defined(PLATFORM_WINDOWS)
 		DeleteCriticalSection((LPCRITICAL_SECTION)lk);
 	#elif defined(PLATFORM_LINUX)
+		pthread_spin_destroy(lk);
+	#elif defined(PLATFORM_FREEBSD)
 		pthread_spin_destroy(lk);
 	#endif
 }
