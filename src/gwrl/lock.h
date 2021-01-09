@@ -1,3 +1,4 @@
+#pragma once
 
 #define INCLUDE_PTHREAD
 #define INCLUDE_WINDOWS
@@ -5,6 +6,7 @@
 #include "gwrl/shared_config.h"
 #include "gwrl/shared_include.h"
 #include "gwrl/shared_types.h"
+#include <pthread.h>
 
 //define the lockid_t type.
 #if defined(PLATFORM_DARWIN)
