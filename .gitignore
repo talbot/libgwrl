@@ -13,6 +13,7 @@ libgw-*.tar.gz
 libgw-1.0/
 *.dSYM/
 build/
+out/*
 src/config.h
 src/gwc/config.h
 *_config.h

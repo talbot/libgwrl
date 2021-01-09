@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.16.5)
 project(gwrl)
 option(GWRL_BUILD_EXAMPLES "Whether or not to build the examples portion of the library." ON)
 option(GWRL_BUILD_TEST "Whether or not to build the test directory." OFF)

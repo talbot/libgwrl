@@ -226,7 +226,7 @@ endif()
 
 ####################################################final build sources
 
-set(SOURCES ${SOURCES} event.c gwrl_time.c socket.c lock.c ${BACKEND_SOURCE})
+set(SOURCES ${SOURCES} event.c gwrl_time.c gwrl_socket.c lock.c ${BACKEND_SOURCE})
 
 if(NOT PLATFORM_WINDOWS)
 	set(SOURCES ${SOURCES} event_wake_pipe.c)
@@ -266,7 +266,7 @@ add_library(gwrl STATIC
 		lock.c
 		proactor.c
 		proactor_imp.c
-		socket.c
+		gwrl_socket.c
 		)
 target_link_libraries(gwrl ${FINAL_LINK_LIBRARIES})
 set_target_properties(gwrl PROPERTIES PUBLIC_HEADER event.h
@@ -281,5 +281,5 @@ set_target_properties(gwrl PROPERTIES PUBLIC_HEADER event.h
 		shared_config.h
 		shared_include.h
 		shared_types.h
-		socket.h
+		gwrl_socket.h
 		)

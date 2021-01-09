@@ -1,5 +1,4 @@
-#pragma once
-#include "gwrl/socket.h"
+#include "gwrl/gwrl_socket.h"
 
 #ifdef __cplusplus
 extern "C" {

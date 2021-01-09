@@ -4,7 +4,6 @@
 //including this file to indicate which file to include. The include
 //is wrapped with appropriate HAVE_*_H checks so you don't need to
 //put them in your headers.
-#pragma once
 
 #if defined(INCLUDE_ASSERT)
 #	if defined(HAVE_ASSERT_H)

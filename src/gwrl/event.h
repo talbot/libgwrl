@@ -1,5 +1,3 @@
-#pragma once
-
 #define _DARWIN_UNLIMITED_SELECT
 #define INCLUDE_ASSERT
 #define INCLUDE_ERRNO
@@ -33,7 +31,7 @@
 #include "gwrl/shared_types.h"
 #include "gwrl/gwrl_time.h"
 #include "gwrl_string.h"
-#include "gwrl/socket.h"
+#include "gwrl/gwrl_socket.h"
 #include "gwrl/lock.h"
 
 #ifndef GWRL_EVENT_H
