@@ -26,6 +26,7 @@
 #include "shared_types.h"
 #include "gwrl_string.h"
 #include <sys/socket.h>
+#include <netinet/in.h>
 
 #ifndef GW_NET_H
 #define GW_NET_H
