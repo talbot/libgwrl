@@ -2,6 +2,8 @@
 #ifndef GW_STRING_H
 #define GW_STRING_H
 
+#include <string.h>
+
 #ifndef HAVE_BZERO
 #	define HAVE_BZERO
 #	define bzero(buf,sz) (memset(buf,0,sz))

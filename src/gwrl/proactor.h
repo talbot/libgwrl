@@ -1,5 +1,7 @@
+#pragma once
 
 #include "gwrl/event.h"
+#include <pthread.h>
 
 #ifndef GWPR_PROACTOR_H
 #define GWPR_PROACTOR_H
