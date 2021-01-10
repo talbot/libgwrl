@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16.5)
 project(gwrl)
-option(GWRL_BUILD_EXAMPLES "Whether or not to build the examples portion of the library." ON)
+option(GWRL_BUILD_EXAMPLES "Whether or not to build the examples portion of the library." OFF)
 option(GWRL_BUILD_TEST "Whether or not to build the test directory." OFF)
 option(GWRL_BUILD_COVERAGE "Whether or not to build lcov coverate report." OFF)
 option(GWRL_FORCE_KQUEUE "If you know you have kqueue or want to force it's use." OFF)
