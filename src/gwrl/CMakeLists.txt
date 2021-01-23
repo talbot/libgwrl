@@ -226,7 +226,7 @@ endif()
 
 ####################################################final build sources
 
-set(SOURCES ${SOURCES} event.c gwrl_time.c gwrl_socket.c lock.c ${BACKEND_SOURCE})
+set(SOURCES ${SOURCES} event.c gwrl_log.c gwrl_time.c gwrl_socket.c lock.c ${BACKEND_SOURCE})
 
 if(NOT PLATFORM_WINDOWS)
 	set(SOURCES ${SOURCES} event_wake_pipe.c)
@@ -247,38 +247,12 @@ endif()
 
 if(PLATFORM_WINDOWS)
 	set(FINAL_LINK_LIBRARIES Kernel32.lib WS2_32.lib WSock32.lib)
-endif()
-
-if(PLATFORM_LINUX)
+elseif(PLATFORM_LINUX)
 	set(FINAL_LINK_LIBRARIES pthread syslog)
 endif()
 
-#add_library(gwrl STATIC ${SOURCES})
-add_library(gwrl_dyld SHARED
-		event.c
-		event_kqueue.c
-		event_wake_pipe.c
-		gwrl_time.c
-		lock.c
-		proactor.c
-		proactor_imp.c
-		gwrl_socket.c
-		gwrl_log.c
-		)
-target_link_libraries(gwrl_dyld ${FINAL_LINK_LIBRARIES})
-set_target_properties(gwrl_dyld PROPERTIES OUTPUT_NAME "gwrl")
 configure_file(shared_config.h.in ${gwrl_SOURCE_DIR}/src/gwrl/shared_config.h)
-add_library(gwrl STATIC
-		event.c
-		event_kqueue.c
-		event_wake_pipe.c
-		gwrl_time.c
-		lock.c
-		proactor.c
-		proactor_imp.c
-		gwrl_socket.c
-		gwrl_log.c
-		)
+add_library(gwrl STATIC ${SOURCES})
 target_link_libraries(gwrl ${FINAL_LINK_LIBRARIES})
 set_target_properties(gwrl PROPERTIES PUBLIC_HEADER
 		event.h
@@ -295,3 +269,19 @@ set_target_properties(gwrl PROPERTIES PUBLIC_HEADER
 		shared_include.h
 		shared_types.h
 		)
+
+if(PLATFORM_DARWIN OR PLATFORM_FREEBSD)
+	add_library(gwrl_dyld SHARED
+			event.c
+			event_kqueue.c
+			event_wake_pipe.c
+			gwrl_time.c
+			lock.c
+			proactor.c
+			proactor_imp.c
+			gwrl_socket.c
+			gwrl_log.c
+			)
+	target_link_libraries(gwrl_dyld ${FINAL_LINK_LIBRARIES})
+	set_target_properties(gwrl_dyld PROPERTIES OUTPUT_NAME "gwrl")
+endif()
