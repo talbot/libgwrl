@@ -21,12 +21,12 @@ extern "C" {
 gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	gwrlbkd_epoll * ebkd = _gwrlbkde(gwrl_mem_calloc(1,sizeof(gwrlbkd_epoll)));
 	if(!ebkd) {
-		gwerr("(el5KJz) calloc error");
+		gwrl_err("(el5KJz) calloc error");
 		return NULL;
 	}
 	ebkd->efd = epoll_create(GWRL_EPOLL_EVENT_COUNT);
 	if(ebkd->efd < 0) {
-		gwprintsyserr("(po7kDs) epoll_create() error",errno);
+        gwrl_sys_error("(po7kDs) epoll_create() error", errno);
 		free(ebkd);
 		return NULL;
 	}
@@ -43,7 +43,7 @@ void gwrl_bkd_set_options(gwrl * rl, gwrl_options * opts) {
 	}
 	void * tmp = gwrl_mem_realloc(ebkd->pevents,sizeof(struct epoll_event) * ebkd->maxnpevents);
 	while(!tmp) {
-		gwprintsyserr("(3RPcV) realloc error",errno);
+        gwrl_sys_error("(3RPcV) realloc error", errno);
 		tmp = gwrl_mem_realloc(ebkd->pevents,sizeof(struct epoll_event) * ebkd->maxnpevents);
 	}
 	ebkd->pevents = (struct epoll_event *)tmp;
@@ -73,7 +73,7 @@ gwrl_bkd_epoll_ctl(gwrl * rl, gwrlsrc_file * fsrc, int eflag) {
 	}
 	if((epoll_ctl(ebkd->efd,eflag,fsrc->fd,&ev)) < 0
 		&& errno != EEXIST && errno != ENOENT) {
-		gwprintsyserr("(dlB8d) epoll_ctl error",errno);
+        gwrl_sys_error("(dlB8d) epoll_ctl error", errno);
 	}
 }
 
@@ -124,7 +124,7 @@ void gwrl_bkd_gather(gwrl * rl) {
 	if(res == 0) return;
 	
 	if(res < 0 && (errno == EFAULT || errno == EBADF || EINVAL)) {
-		gwprintsyserr("(3Xf9G) epoll_wait error",errno);
+        gwrl_sys_error("(3Xf9G) epoll_wait error", errno);
 		return;
 	}
 	

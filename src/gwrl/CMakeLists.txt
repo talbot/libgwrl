@@ -248,7 +248,7 @@ endif()
 if(PLATFORM_WINDOWS)
 	set(FINAL_LINK_LIBRARIES Kernel32.lib WS2_32.lib WSock32.lib)
 elseif(PLATFORM_LINUX)
-	set(FINAL_LINK_LIBRARIES pthread syslog)
+	set(FINAL_LINK_LIBRARIES pthread syslog syslog-ng)
 endif()
 
 configure_file(shared_config.h.in ${gwrl_SOURCE_DIR}/src/gwrl/shared_config.h)

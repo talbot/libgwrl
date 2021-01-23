@@ -23,7 +23,7 @@ gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	gwrlbkd_select * sbkd = _gwrlbkds(gwrl_mem_calloc(1,sizeof(gwrlbkd_select)));
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!sbkd) {
-		gwprintsyserr("(p3F7r) calloc error",errno);
+        gwrl_sys_error("(p3F7r) calloc error", errno);
 		return NULL;
 	}
 	#endif
@@ -180,7 +180,7 @@ void gwrl_bkd_gather(gwrl * rl) {
 		if(timeout.tv_sec < 0 || timeout.tv_usec < 0) return;
 		
 		//nfds parameter to select() is too large, not sure how to handle
-		fprintf(stderr,"select: file descriptor limit reached. exiting. \n");
+		gwrl_err("select: file descriptor limit reached. exiting. \n");
 		exit(1);
 	}
 	

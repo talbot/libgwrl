@@ -20,7 +20,7 @@ gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	LPSTR msg = NULL;
 	
 	if(!iobkd) {
-		gwerr("(5F8bB) calloc error");
+		gwrl_err("(5F8bB) calloc error");
 		return NULL;
 	}
 	
@@ -65,7 +65,7 @@ void gwrl_wake(gwrl * rl) {
 		ovlp->op = gwpr_ovlp_op_wake;
 		res = PostQueuedCompletionStatus(iobkd->iocp,0,0,(LPOVERLAPPED)ovlp);
 		if(res == 0) {
-			gwprintsyserr("(0P4Xk) PostQueuedCompletionStatus error",GetLastError());
+            gwrl_sys_error("(0P4Xk) PostQueuedCompletionStatus error", GetLastError());
 		}
 	}
 }
@@ -76,8 +76,8 @@ void gwrl_bkd_src_add(gwrl * rl, gwrlsrc * src) {
 	gwrlsrc_file * fsrc = _gwrlsrcf(src);
 	res = CreateIoCompletionPort(fsrc->fd,iobkd->iocp,0,1);
 	if(res == NULL) {
-		gwprintsyserr("(P03CF) CreateIOCompletionPort Error",GetLastError());
-		gwerr("(3FD4R) Error adding input source to IO Completion Ports");
+        gwrl_sys_error("(P03CF) CreateIOCompletionPort Error", GetLastError());
+		gwrl_err("(3FD4R) Error adding input source to IO Completion Ports");
 	}
 }
 

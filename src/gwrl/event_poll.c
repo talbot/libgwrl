@@ -25,7 +25,7 @@ gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	gwrlbkd_poll * pbkd = _gwrlbkdp(gwrl_mem_calloc(1,sizeof(gwrlbkd_poll)));
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!pbkd) {
-		gwprintsyserr("(pe1Ij) calloc error",errno);
+        gwrl_sys_error("(pe1Ij) calloc error", errno);
 		return NULL;
 	}
 	#endif
@@ -33,7 +33,7 @@ gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	pbkd->maxnfds = GWRL_POLLFD_COUNT;
 	pbkd->fds = (struct pollfd *)gwrl_mem_calloc(pbkd->maxnfds,sizeof(struct pollfd));
 	if(!pbkd->fds) {
-		gwprintsyserr("(poEi4) calloc error",errno);
+        gwrl_sys_error("(poEi4) calloc error", errno);
 		free(pbkd);
 		return NULL;
 	}
@@ -49,7 +49,7 @@ void gwrl_bkd_set_options(gwrl * rl, gwrl_options * opts) {
 		int diff = rl->options.gwrl_pollfd_count - opts->gwrl_pollfd_count;
 		void * tmp = gwrl_mem_realloc(pbkd->fds,sizeof(struct pollfd) * (pbkd->maxnfds + diff));
 		while(!tmp) {
-			gwprintsyserr("(6FB3D) calloc error",errno);
+            gwrl_sys_error("(6FB3D) calloc error", errno);
 			tmp = gwrl_mem_realloc(pbkd->fds,sizeof(struct pollfd) * pbkd->maxnfds+diff);
 		}
 		pbkd->fds = tmp;
@@ -126,7 +126,7 @@ void gwrl_bkd_src_add(gwrl * rl, gwrlsrc * src) {
 		pbkd->maxnfds += rl->options.gwrl_pollfd_count;
 		void * tmp = gwrl_mem_realloc(pbkd->fds, sizeof(struct pollfd)*pbkd->maxnfds);
 		while(!tmp) {
-			gwprintsyserr("(3l8FG) realloc error",errno);
+            gwrl_sys_error("(3l8FG) realloc error", errno);
 			tmp = gwrl_mem_realloc(pbkd->fds, sizeof(struct pollfd)*pbkd->maxnfds);
 		}
 		pbkd->fds = tmp;
@@ -148,14 +148,14 @@ void gwrl_bkd_src_add(gwrl * rl, gwrlsrc * src) {
 		if(pbkd->lkp_src) {
 			void * tmp = gwrl_mem_realloc(pbkd->lkp_src, sizeof(struct pollfd) * pbkd->lkp_maxfd+1);
 			while(!tmp) {
-				gwprintsyserr("(3lUv4) realloc error",errno);
+                gwrl_sys_error("(3lUv4) realloc error", errno);
 				tmp = gwrl_mem_realloc(pbkd->lkp_src, sizeof(struct pollfd) * pbkd->lkp_maxfd+1);
 			}
 			pbkd->lkp_src = tmp;
 		} else {
 			pbkd->lkp_src = gwrl_mem_calloc(pbkd->lkp_maxfd+1,sizeof(struct pollfd));
 			while(!pbkd->lkp_src) {
-				gwprintsyserr("(4kKeR) calloc error",errno);
+                gwrl_sys_error("(4kKeR) calloc error", errno);
 				pbkd->lkp_src = gwrl_mem_calloc(pbkd->lkp_maxfd+1,sizeof(struct pollfd));
 			}
 		}
@@ -208,7 +208,7 @@ void gwrl_bkd_gather(gwrl * rl) {
 		if(ms < -1) return; //invalid timeout, let process events fix it
 		
 		//ndfs is greater than system allowed
-		gwprintsyserr("(EJ4KD) poll file descriptor limit reached. exiting.",errno);
+        gwrl_sys_error("(EJ4KD) poll file descriptor limit reached. exiting.", errno);
 		exit(-1);
 	}
 	
