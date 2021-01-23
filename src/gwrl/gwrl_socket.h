@@ -24,7 +24,7 @@
 #include "shared_config.h"
 #include "shared_include.h"
 #include "shared_types.h"
-#include "gwrl_string.h"
+#include "gwrl_log.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 

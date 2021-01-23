@@ -332,10 +332,10 @@ int skctl(skctlinfo * arg) {
 	if(res < 0) {
 		#if defined(PLATFORM_WINDOWS)
 			gwprintsyserr("skctl error",arg->serrno);
-		#else
-			gwprintsyserr("skctl error",arg->serrno);
-		#endif
-		fprintf(stderr,"skctlinfo flag that caused the error: %s\n",skctl_str_for_flag(arg->serrnoflag));
+        #else
+			gwrl_sys_error("skctl error",arg->serrno);
+        #endif
+        return 0 - res;
 	}
 
 	return res;

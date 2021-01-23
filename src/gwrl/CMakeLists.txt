@@ -42,7 +42,7 @@ check_include_file(stdbool.h HAVE_STDBOOL_H)
 check_include_file(stdint.h HAVE_STDINT_H)
 check_include_file(stdio.h HAVE_STDIO_H)
 check_include_file(stdlib.h HAVE_STDLIB_H)
-check_include_file(gwrl_string.h HAVE_STRING_H)
+check_include_file(gwrl_log.h HAVE_LOG_H)
 check_include_file(strings.h HAVE_STRINGS_H)
 check_include_file(sys/socket.h HAVE_SYS_SOCKET_H)
 check_include_file(sys/sysctl.h HAVE_SYS_SYSCTL_H)
@@ -250,11 +250,21 @@ if(PLATFORM_WINDOWS)
 endif()
 
 if(PLATFORM_LINUX)
-	set(FINAL_LINK_LIBRARIES pthread)
+	set(FINAL_LINK_LIBRARIES pthread syslog)
 endif()
 
 #add_library(gwrl STATIC ${SOURCES})
-add_library(gwrl_dyld SHARED ${SOURCES})
+add_library(gwrl_dyld SHARED
+		event.c
+		event_kqueue.c
+		event_wake_pipe.c
+		gwrl_time.c
+		lock.c
+		proactor.c
+		proactor_imp.c
+		gwrl_socket.c
+		gwrl_log.c
+		)
 target_link_libraries(gwrl_dyld ${FINAL_LINK_LIBRARIES})
 set_target_properties(gwrl_dyld PROPERTIES OUTPUT_NAME "gwrl")
 configure_file(shared_config.h.in ${gwrl_SOURCE_DIR}/src/gwrl/shared_config.h)
@@ -267,12 +277,15 @@ add_library(gwrl STATIC
 		proactor.c
 		proactor_imp.c
 		gwrl_socket.c
+		gwrl_log.c
 		)
 target_link_libraries(gwrl ${FINAL_LINK_LIBRARIES})
-set_target_properties(gwrl PROPERTIES PUBLIC_HEADER event.h
+set_target_properties(gwrl PROPERTIES PUBLIC_HEADER
+		event.h
 		event_iocp.h
 		event_private.h
-		gwrl_string.h
+		gwrl_log.h
+		gwrl_socket.h
 		gwrl_time.h
 		lock.h
 		proactor.h
@@ -281,5 +294,4 @@ set_target_properties(gwrl PROPERTIES PUBLIC_HEADER event.h
 		shared_config.h
 		shared_include.h
 		shared_types.h
-		gwrl_socket.h
 		)

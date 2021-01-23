@@ -53,7 +53,7 @@ gwpr_src_activity_read_accept(gwpr * pr, gwrlsrc * src) {
 					memcpy(errinfo.fnc,"accept\0",7);
 					pdata->errorcb(pr,&errinfo);
 				} else {
-					gwprintsyserr("(09F6R) accept() error occured with no error callback.",errno);
+				    gwrl_sys_error("(09F6R) accept() error occured with no error callback.",errno);
 				}
 			}
 		}
@@ -154,7 +154,7 @@ gwrlsrc * src, gwpr_io_info * ioinfo, gwpr_error_info * errinfo) {
 	}
 
 	else {
-		gwprintsyserr("(OKL4F) proactor read error with no error callback",errno);
+        gwrl_sys_error("(OKL4F) proactor read error with no error callback",errno);
 	}
 }
 
@@ -321,7 +321,7 @@ gwpr_src_activity(gwrl * rl, gwrlevt * evt) {
 				//accept is set, try and accept any clients
 				gwpr_src_activity_read_accept(pr,src);
 			} else {
-				gwerr("(4FL9KF) proactor can read data but there's no read callback set.");
+                gwrl_err("(4FL9KF) proactor can read data but there's no read callback set.");
 			}
 		}
 		
@@ -409,7 +409,7 @@ gwpr_src_activity(gwrl * rl, gwrlevt * evt) {
 				if(pdata->didwritecb == &io_activity) gwpr_buf_free(pr,ioinfo.buf);
 				gwprwrq_free(pr,fsrc,q);
 			} else {
-				gwerr("(38FG7) proactor synchronous write completed with no did_write callback set.");
+                gwrl_err("(38FG7) proactor synchronous write completed with no did_write callback set.");
 			}
 		}
 		
@@ -420,7 +420,7 @@ gwpr_src_activity(gwrl * rl, gwrlevt * evt) {
 				ioinfo.src = src;
 				pdata->closedcb(pr,&ioinfo);
 			} else {
-				gwerr("(7GK9F) proactor detected a closed socket or file with no closed callback set.");
+                gwrl_err("(7GK9F) proactor detected a closed socket or file with no closed callback set.");
 			}
 		}
 		
@@ -431,7 +431,7 @@ gwpr_src_activity(gwrl * rl, gwrlevt * evt) {
 				pdata->errorcb(pr,errinfo);
 				free(errinfo);
 			} else {
-				gwerr("(0LOP4) proactor encountered a synchronous write error with no error callback set.");
+                gwrl_err("(0LOP4) proactor encountered a synchronous write error with no error callback set.");
 			}
 		}
 	}
@@ -771,7 +771,7 @@ gwpr_accept(gwpr * pr, gwrlsrc * src) {
 	gwprdata * pdata = fsrc->pdata;
 	gwrlsrc_flags_t flags = src->flags;
 	if(!pdata->acceptcb) {
-		gwerr("(6NMC4) cannot call accept without an accept callback set.");
+        gwrl_err("(6NMC4) cannot call accept without an accept callback set.");
 		return -1;
 	}
 	flset(flags,GWRL_ENABLED|GWRL_RD);
@@ -786,7 +786,7 @@ gwpr_connect(gwpr * pr, gwrlsrc * src, struct sockaddr_storage * addr) {
 	gwprdata * prdata = (gwprdata *)fsrc->pdata;
 	gwrlsrc_flags_t flags = src->flags;
 	if(!prdata->connectcb) {
-		gwerr("(8rFG3) cannot call connect without a connect callback set.");
+        gwrl_err("(8rFG3) cannot call connect without a connect callback set.");
 		return -1;
 	}
 	gwsk_nonblock(fsrc->fd,1);
@@ -802,7 +802,7 @@ gwpr_asynchronous_read(gwpr * pr, gwrlsrc * src, size_t bufsize, gwpr_io_op_id o
 	gwprdata * pdata = (gwprdata *)fsrc->pdata;
 	gwrlsrc_flags_t flags = src->flags;
 	if(!pdata->didreadcb) {
-		gwerr("(7GB3H) cannot call recvfrom without a did read callback.");
+        gwrl_err("(7GB3H) cannot call recvfrom without a did read callback.");
 		return -1;
 	}
 	flset(flags,GWRL_ENABLED|GWRL_RD);
@@ -906,7 +906,7 @@ gwprwrq_get(gwpr * pr, gwrlsrc_file * fsrc) {
 	} else {
 		wrq = gwrl_mem_calloc(1,sizeof(gwprwrq));
 		while(!wrq) {
-			gwerr("(9DXIL) calloc error");
+            gwrl_err("(9DXIL) calloc error");
 			wrq = gwrl_mem_calloc(1,sizeof(gwprwrq));
 		}
 	}

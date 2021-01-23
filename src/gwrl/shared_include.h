@@ -131,6 +131,11 @@
 #	endif
 #endif
 
+#ifndef HAVE_BZERO
+#	define HAVE_BZERO
+#	define bzero(buf,sz) (memset(buf,0,sz))
+#endif
+
 #if defined(WIN_LEAN_MEAN) && defined(PLATFORM_WINDOWS)
 #	ifndef WIN32_LEAN_AND_MEAN
 #		define WIN32_LEAN_AND_MEAN

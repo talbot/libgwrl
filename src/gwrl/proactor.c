@@ -19,20 +19,20 @@ gwpr_create(gwrl * rl) {
 
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!pr) {
-			gwerr("(Dle3d) calloc error");
+            gwrl_err("(Dle3d) calloc error");
 			return NULL;
 		}
 	#endif
 
 	pr->bufctl = gwprbufctl_create();
-	
+
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!pr->bufctl) {
 			free(pr);
 			return NULL;
 		}
 	#endif
-	
+
 	gwpr_set_options(pr,&options);
 	pr->rl = rl;
 	rl->pr = pr;
@@ -44,15 +44,15 @@ gwprdata_create() {
 	gwprdata * data = _gwprdata(gwrl_mem_calloc(1,sizeof(gwprdata)));
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!data) {
-			gwerr("(Do4Kd) calloc error");
+            gwrl_err("(Do4Kd) calloc error");
 			return NULL;
 		}
 	#endif
-	
+
 	data->rdbufsize = 512;
 	data->rdfilters = NULL;
 	data->wrfilters = NULL;
-	
+
 	if(GWPR_FILTERS_MAX > 0) {
 		data->rdfilters = gwrl_mem_calloc(1,sizeof(gwpr_io_cb *) * GWPR_FILTERS_MAX);
 		#ifndef GWRL_HIDE_FROM_COVERAGE
@@ -61,7 +61,7 @@ gwprdata_create() {
 				return NULL;
 			}
 		#endif
-		
+
 		data->wrfilters = gwrl_mem_calloc(1,sizeof(gwpr_io_cb *) * GWPR_FILTERS_MAX);
 		#ifndef GWRL_HIDE_FROM_COVERAGE
 			if(!data->wrfilters) {
@@ -92,7 +92,7 @@ gwprbufctl_create() {
 	gwprbufctl * ctl = (gwprbufctl *)gwrl_mem_calloc(1,sizeof(gwprbufctl));
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!ctl) {
-		gwerr("(p4P0R) calloc error");
+        gwrl_err("(p4P0R) calloc error");
 		return NULL;
 	}
 	#endif
@@ -163,10 +163,10 @@ gwpr_filter_add(gwpr * pr, gwrlsrc * src, gwpr_filter_id fid, gwpr_io_cb * fnc) 
 		bool added = false;
 		gwprdata * pdata = _gwprdata(_gwrlsrcf(src)->pdata);
 	#else
-		gwerr("gwper_filter_add, no filter slots available.");
+        gwrl_err("gwper_filter_add, no filter slots available.");
 		return;
 	#endif
-	
+
 	#if GWPR_FILTERS_MAX > 0
 		if(fid == gwpr_rdfilter_id && GWPR_FILTERS_MAX > 0) {
 			for(; i<GWPR_FILTERS_MAX; i++) {
@@ -254,7 +254,7 @@ gwpr_buf_get(gwpr * pr, size_t size) {
 	gwprbuf * data = (gwprbuf *)gwrl_mem_calloc(1,sizeof(gwprbuf));
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!data) {
-			gwerr("(Erl3F) calloc error");
+            gwrl_err("(Erl3F) calloc error");
 			return NULL;
 		}
 	#endif
@@ -262,7 +262,7 @@ gwpr_buf_get(gwpr * pr, size_t size) {
 	data->buf = (char *)gwrl_mem_calloc(1,size);
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!data->buf) {
-			gwerr("(RF4Hk) calloc error");
+            gwrl_err("(RF4Hk) calloc error");
 			free(data);
 			return NULL;
 		}
@@ -277,10 +277,10 @@ gwpr_buf_get(gwpr * pr, size_t size) {
 gwprbuf *
 gwpr_buf_getp(gwpr * pr, size_t size) {
 	gwprbuf * data = (gwprbuf *)gwrl_mem_calloc(1,sizeof(gwprbuf));
-	
+
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	while(!data) {
-		gwerr("(Erl3F) calloc error");
+        gwrl_err("(Erl3F) calloc error");
 		data = (gwprbuf *)gwrl_mem_calloc(1,sizeof(gwprbuf));
 	}
 	#endif
@@ -288,14 +288,14 @@ gwpr_buf_getp(gwpr * pr, size_t size) {
 	data->buf = (char *)gwrl_mem_calloc(1,size);
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 		while(!data->buf) {
-			gwerr("(RF4Hk) calloc error");
+            gwrl_err("(RF4Hk) calloc error");
 			data->buf = (char *)gwrl_mem_calloc(1,size);
 		}
 	#endif
-	
+
 	data->buf = data->buf;
 	data->bufsize = size;
-	
+
 	return data;
 }
 

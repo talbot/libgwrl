@@ -27,7 +27,7 @@ void gwrl_wake_init(gwrl * rl) {
 		int res = pipe((int *)rl->fds);
 		while(res < 0) {
 			pipe((int *)rl->fds);
-			gwprintsyserr("(3FG9D) pipe error",errno);
+			gwrl_sys_error("(3FG9D) pipe error", errno);
 		}
 	#endif
 	
@@ -37,7 +37,7 @@ void gwrl_wake_init(gwrl * rl) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!fsrc) {
-		gwerr("(3FDli) gwrl_wake_init couldn't create file input source");
+        gwrl_err("(3FDli) gwrl_wake_init couldn't create file input source");
 		return;
 	}
 	#endif

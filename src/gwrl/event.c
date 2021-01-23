@@ -19,7 +19,7 @@ gwrl_create() {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!rl) {
-		gwerr("(6GlI8) calloc error");
+        gwrl_err("(6GlI8) calloc error");
 		return NULL;
 	}
 	#endif
@@ -42,7 +42,7 @@ gwrl_create() {
 		rl->gatherfncs = gwrl_mem_calloc(1,sizeof(gwrl_gather_fnc *) * GWRL_GATHER_FUNCS_MAX);
 		#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!rl->gatherfncs) {
-			gwerr("(7VB3R) calloc error");
+            gwrl_err("(7VB3R) calloc error");
 			free(rl);
 			return NULL;
 		}
@@ -76,7 +76,7 @@ void * userdata, fileid_t fd, gwrlevt_flags_t flags) {
 		evt = _gwrlevt(gwrl_mem_calloc(1,sizeof(*evt)));
 		#ifndef GWRL_HIDE_FROM_COVERAGE
 		if(!evt) {
-			gwerr("(8FxlC) calloc error");
+            gwrl_err("(8FxlC) calloc error: evt=%s", evt);
 			return NULL;
 		}
 		#endif
@@ -97,7 +97,7 @@ void * userdata, fileid_t fd, gwrlevt_flags_t flags) {
 	//creates a new event but keeps trying if it's null.
 	gwrlevt * evt = gwrl_evt_create(rl,src,callback,userdata,fd,flags);
 	while(!evt) {
-		gwerr("(4LOP0) evt error");
+        gwrl_err("(4LOP0) evt error: evt=%s", evt);
 		evt = gwrl_evt_create(rl,src,callback,userdata,fd,flags);
 	}
 	return evt;
@@ -114,7 +114,7 @@ bool persist, gwrlevt_cb * callback, void * userdata) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!tsrc) {
-		gwerr("(5Gn3K) caloc error");
+        gwrl_err("(5Gn3K) caloc error");
 		return NULL;
 	}
 	#endif
@@ -151,7 +151,7 @@ gwrlevt_cb * callback, void * userdata) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!src) {
-		gwerr("(25FnG) calloc error");
+		gwrl_err("(25FnG) calloc error");
 		return NULL;
 	}
 	#endif
@@ -239,7 +239,7 @@ gwrl_set_options(gwrl * rl, gwrl_options * opts) {
 		
 		if(diff < 0) {
 			//the new memory chunk is smaller than the old (original) one.
-			gwerr("(L3JF8) gather function(s) were truncated");
+			gwrl_err("(L3JF8) gather function(s) were truncated");
 			memcpy(tmp,rl->gatherfncs,sizeof(gwrl_gather_fnc*) * opts->gwrl_gather_funcs_max);
 		} else {
 			//new memory chunk is same or bigger.
@@ -255,7 +255,7 @@ gwrl_set_options(gwrl * rl, gwrl_options * opts) {
 	} else {
 		//all gatherfnc memory will be freed and not re-allocated.
 		if(rl->gatherfncs) {
-			gwerr("(35FH8) gather function(s) were all truncated");
+		    gwrl_err("(35FH8) gather function(s) were all truncated");
 			free(rl->gatherfncs);
 			rl->gatherfncs = NULL;
 		}
@@ -287,7 +287,7 @@ gwrl_add_gather_fnc(gwrl * rl, gwrl_gather_fnc * fnc) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!added) {
-		gwerr("(3F85R) no open gather slots.");
+        gwrl_err("(3F85R) no open gather slots.");
 		return;
 	}
 	#endif
@@ -321,7 +321,7 @@ gwrl_free(gwrl * rl, gwrlsrc ** sources) {
 	//make sure there is no proactor associated with the reactor.
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(rl && rl->pr) {
-		gwerr("(RF4L3) gwrl_free error, you can't free a reactor before freeing the proactor.");
+	    gwrl_err("(RF4L3) gwrl_free error, you can't free a reactor before freeing the proactor.");
 		return;
 	}
 	#endif

@@ -23,7 +23,7 @@ gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(!kbkd) {
-		gwerr("(3el0L) calloc error");
+		gwrl_err("(3el0L) calloc error");
 		return NULL;
 	}
 	#endif
@@ -32,7 +32,7 @@ gwrlbkd * gwrl_bkd_init(gwrl * rl) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(kbkd->kq < 0) {
-		gwerr("(1LKdoL) kqueue error");
+        gwrl_err("(1LKdoL) kqueue error");
 		free(kbkd);
 		return NULL;
 	}
@@ -59,7 +59,7 @@ void gwrl_bkd_set_options(gwrl * rl,gwrl_options * opts) {
 	
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	while(!tmp) {
-		gwerr("(54oKD0) realloc error");
+        gwrl_err("(54oKD0) realloc error");
 		tmp = gwrl_mem_realloc(kbkd->kevents,sizeof(struct kevent) * kbkd->maxkevents);
 	}
 	#endif
@@ -88,7 +88,7 @@ void gwrl_bkd_kevent(gwrl * rl, gwrlsrc * src, int kflags, int kfilter) {
 	res = kevent(kbkd->kq,&ke,1,NULL,0,&ts);
 	#ifndef GWRL_HIDE_FROM_COVERAGE
 	if(res < 0 && errno != EBADF) {
-		gwprintsyserr("(9dlkF) kevent error",errno);
+		gwrl_sys_error("(9dlkF) kevent error", errno);
 	}
 	#endif
 }
